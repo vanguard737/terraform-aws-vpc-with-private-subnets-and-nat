@@ -21,7 +21,7 @@ resource "aws_nat_gateway" "nat_2" {
   subnet_id     = aws_subnet.public_nat_2.id
 }
 
-// aws --region eu-west-1 ec2 describe-images --owners amazon --filters Name="name",Values="amzn-ami-vpc-nat*"
+// aws --region us-west-2 ec2 describe-images --owners amazon --filters Name="name",Values="amzn-ami-vpc-nat*"
 data "aws_ami" "nat" {
   most_recent = true
 
