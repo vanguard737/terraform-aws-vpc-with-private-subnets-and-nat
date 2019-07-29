@@ -1,42 +1,26 @@
-# allow internet access to Application nodes through nat #1
-resource "aws_route_table" "nat_gw_1" {
+# allow internet access to Application nodes through NAT GW
+resource "aws_route_table" "nat_gw" {
   count  = local.nat_gw ? 1 : 0
   vpc_id = aws_vpc.project.id
 
   route {
     cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_1[0].id
+    nat_gateway_id = aws_nat_gateway.nat[count.index].id
   }
 
   tags = {
-    Name = "Application to Internet through Nat #1"
+    Name = "APP/DB subnets to Internet through NAT gateway"
   }
 }
 
-resource "aws_route_table_association" "app_1_subnet_to_nat_gw" {
+resource "aws_route_table_association" "app_subnet_to_nat_gw" {
   count          = local.nat_gw ? 1 : 0
-  route_table_id = aws_route_table.nat_gw_1[0].id
-  subnet_id      = aws_subnet.private_app_1.id
+  route_table_id = aws_route_table.nat_gw[count.index].id
+  subnet_id      = aws_subnet.private_app.id
 }
 
-# allow internet access to Application nodes through nat #2
-resource "aws_route_table" "nat_gw_2" {
-  count  = local.nat_gw_multi_az ? 1 : 0
-  vpc_id = aws_vpc.project.id
-
-  route {
-    cidr_block     = "0.0.0.0/0"
-    nat_gateway_id = aws_nat_gateway.nat_2[0].id
-  }
-
-  tags = {
-    Name = "Application to Internet through Nat #2"
-  }
+resource "aws_route_table_association" "db_subnet_to_nat_gw" {
+  count          = local.nat_gw ? 1 : 0
+  route_table_id = aws_route_table.nat_gw[count.index].id
+  subnet_id      = aws_subnet.private_db.id
 }
-
-resource "aws_route_table_association" "app_2_subnet_to_nat_gw" {
-  count          = local.nat_gw_multi_az ? 1 : 0
-  route_table_id = aws_route_table.nat_gw_2[0].id
-  subnet_id      = aws_subnet.private_app_2[0].id
-}
-
