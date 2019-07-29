@@ -5,7 +5,7 @@ resource "aws_subnet" "public_nat_1" {
   availability_zone = "us-west-2b"
 
   tags = {
-    Name       = "Nat #1"
+    Name       = "NAT-1"
     Visibility = "Public"
   }
 }
@@ -17,7 +17,7 @@ resource "aws_subnet" "public_nat_2" {
   availability_zone = "us-west-2c"
 
   tags = {
-    Name       = "Nat #2"
+    Name       = "NAT-2"
     Visibility = "Public"
   }
 }
@@ -30,7 +30,7 @@ resource "aws_subnet" "private_rds_1" {
   availability_zone = "us-west-2b"
 
   tags = {
-    Name       = "RDS #1"
+    Name       = "RDS-1"
     Visibility = "Private"
   }
 }
@@ -43,7 +43,7 @@ resource "aws_subnet" "private_rds_2" {
   availability_zone = "us-west-2c"
 
   tags = {
-    Name       = "RDS #2"
+    Name       = "RDS-2"
     Visibility = "Private"
   }
 }
@@ -55,7 +55,7 @@ resource "aws_subnet" "private_app_1" {
   availability_zone = "us-west-2b"
 
   tags = {
-    Name       = "App #1"
+    Name       = "APP-1"
     Visibility = "Private"
   }
 }
@@ -63,13 +63,12 @@ resource "aws_subnet" "private_app_1" {
 # private subnet #2
 resource "aws_subnet" "private_app_2" {
   count = var.multi_az ? 1 : 0
-
   cidr_block        = "10.100.2.0/24"
   vpc_id            = aws_vpc.project.id
   availability_zone = "us-west-2c"
 
   tags = {
-    Name       = "App #2"
+    Name       = "APP-2"
     Visibility = "Private"
   }
 }
