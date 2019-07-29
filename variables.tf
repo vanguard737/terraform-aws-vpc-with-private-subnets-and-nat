@@ -8,8 +8,8 @@ variable "nat_mode" {
 }
 
 locals {
-  nat_instance  = var.nat_mode == "gateway" ? false : true
-  nat_gw        = var.nat_mode == "gateway" ? true : false
+  nat_instance = var.nat_mode == "gateway" ? false : true
+  nat_gw       = var.nat_mode == "gateway" ? true : false
 }
 
 variable "nat_instance_type" {
